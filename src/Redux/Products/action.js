@@ -30,7 +30,7 @@ export const addToCart = (productId, token) => async (dispatch) => {
                 'Authorization': `Bearer ${token}`
             }
         }
-        const { data } = await axios.post(`${API_URL}/products/cart/${productId}`, {}, config)
+        const { data } = await axios.post(`${API_URL}/cart/${productId}`, {}, config)
         console.log(data)
         dispatch(fetchCartData());
     } catch (error) {
@@ -52,7 +52,7 @@ export const fetchCartData = (token) => async (dispatch) => {
                 "Authorization": `Bearer ${token}`
             }
         }
-        const res = await axios.get(`${API_URL}/products/cart`, config); // Fix here
+        const res = await axios.get(`${API_URL}/cart`, config); // Fix here
         console.log(res)
         dispatch(getCartDataSuccess(res.data));
     } catch (error) {
@@ -110,7 +110,7 @@ export const adjustQuantityInCart = (productId, token, adjustment) => async (dis
           "Authorization": `Bearer ${token}`
         }
       }
-      const { data } = await axios.get(`${API_URL}/products/cart`, config);
+      const { data } = await axios.get(`${API_URL}/cart`, config);
       const cart = data.map(item => {
         if (item.productId === productId) {
           if (adjustment < 0 && item.quantity === 1) {
@@ -137,7 +137,7 @@ export const removeFromCart = (productId, token, wishlist) => async (dispatch) =
                 "Authorization": `Bearer ${token}`
             }
         }
-        const res = await axios.delete(`${API_URL}/products/cart/${productId}`, config); // Fix here
+        const res = await axios.delete(`${API_URL}/cart/${productId}`, config); // Fix here
         console.log(res)
 
         dispatch(fetchCartData(token));

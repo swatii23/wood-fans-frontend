@@ -36,7 +36,7 @@ const signUpFailure = (payload) => {
 const loginWithEmailAndPassword = (email, password, onSuccess) => async (dispatch) => {
      try {
           dispatch(loginRequest())
-          const { data } = await axios.post(`${API_URL}/login`, { email, password })
+          const { data } = await axios.post(`${API_URL}/auth/login`, { email, password })
           console.log(data)
           // localStorage.setItem('userToken', data.token)
           dispatch(loginSuccess(data.token))
@@ -115,7 +115,7 @@ const signUpNewUser = (email, password, name, onSuccess) => async (dispatch) => 
      try {
 
           dispatch(signUpRequest());
-          const { data } = await axios.post(`${API_URL}/signup`, { name, email, password })
+          const { data } = await axios.post(`${API_URL}/auth/signup`, { name, email, password })
           console.log(data)
           onSuccess()
           dispatch(signUpSuccess(data.token));
