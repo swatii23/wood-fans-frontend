@@ -1,1 +1,1 @@
-export const BASE_URI = 'https://super-sunbonnet-frog.cyclic.app'
+export const API_URL = 'https://super-sunbonnet-frog.cyclic.app'

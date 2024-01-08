@@ -26,7 +26,7 @@ import PopupMessage from "../Components/Common/PopupMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, fetchCartData } from "../Redux/Products/action";
 import axios from "axios";
-import { BASE_URI } from "../Redux/api";
+import { API_URL } from "../Redux/api";
 const sizeArray = ["Big", "Average", "Small"];
 const quantityArray = [1, 2, 3, 4];
 
@@ -63,7 +63,7 @@ const SingleProduct = () => {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const { data } = await axios.get(`${BASE_URI}/products/${productId}`);
+        const { data } = await axios.get(`${API_URL}/products/${productId}`);
         setProductData(data);
         setImage(data?.images);
         setMainImage(data?.images[0]);

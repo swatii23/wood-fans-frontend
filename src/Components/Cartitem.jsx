@@ -3,7 +3,7 @@ import { auth } from "../Services/firebaseConfig";
 import { useDispatch, useSelector } from "react-redux";
 import { adjustQuantityInCart } from "../Redux/Products/action";
 import axios from "axios";
-import { BASE_URI } from "../Redux/api";
+import { API_URL } from "../Redux/api";
 
 const Cartitem = ({ product, btnOnClick }) => {
   const { productId, quantity } = product;
@@ -16,7 +16,7 @@ const Cartitem = ({ product, btnOnClick }) => {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const { data } = await axios.get(`${BASE_URI}/products/${productId}`);
+        const { data } = await axios.get(`${API_URL}/products/${productId}`);
         setItemData(data);
         setMainImg(data?.images);
       } catch (error) {

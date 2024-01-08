@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPass
 import { collection, setDoc, doc, getDocs, getDoc } from 'firebase/firestore'
 import { FORGOT_PASSWORD_FAILURE, FORGOT_PASSWORD_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGN_UP_FAILURE, SIGN_UP_REQUEST, SIGN_UP_SUCCESS } from './actionType'
 import axios from 'axios'
-import { BASE_URI } from '../api'
+import { API_URL } from '../api'
 
 // Login Action Methods
 const loginRequest = () => {
@@ -36,7 +36,7 @@ const signUpFailure = (payload) => {
 const loginWithEmailAndPassword = (email, password, onSuccess) => async (dispatch) => {
      try {
           dispatch(loginRequest())
-          const { data } = await axios.post(`${BASE_URI}/login`, { email, password })
+          const { data } = await axios.post(`${API_URL}/login`, { email, password })
           console.log(data)
           // localStorage.setItem('userToken', data.token)
           dispatch(loginSuccess(data.token))
@@ -115,7 +115,7 @@ const signUpNewUser = (email, password, name, onSuccess) => async (dispatch) => 
      try {
 
           dispatch(signUpRequest());
-          const { data } = await axios.post(`${BASE_URI}/signup`, { name, email, password })
+          const { data } = await axios.post(`${API_URL}/signup`, { name, email, password })
           console.log(data)
           onSuccess()
           dispatch(signUpSuccess(data.token));

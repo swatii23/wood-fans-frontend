@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { storeDB, query, collection, getDoc, getDocs, doc, updateDoc, arrayUnion, arrayRemove, writeBatch } from '../../Services/firebaseConfig'
 import { DATA_GET_REQUEST, DATA_GET_SUCCESS, DATA_GET_FAILURE, CART_GET_REQUEST, CART_GET_SUCCESS, CART_GET_FAILURE, WISHLIST_GET_REQUEST, WISHLIST_GET_SUCCESS, WISHLIST_GET_FAILURE } from './actionTypes';
-import { BASE_URI } from '../api'
+import { API_URL } from '../api'
 
 export const getDataRequest = () => ({ type: DATA_GET_REQUEST });
 export const getDataSuccess = (data) => ({ type: DATA_GET_SUCCESS, payload: data });
@@ -11,7 +11,7 @@ export const getDataFailure = (error) => ({ type: DATA_GET_FAILURE, payload: err
 export const fetchData = () => async (dispatch) => {
     dispatch(getDataRequest());
     try {
-        const res = await axios.get(`${BASE_URI}/products`);
+        const res = await axios.get(`${API_URL}/products`);
 
         dispatch(getDataSuccess(res.data));
     } catch (error) {
@@ -30,7 +30,7 @@ export const addToCart = (productId, token) => async (dispatch) => {
                 'Authorization': `Bearer ${token}`
             }
         }
-        const { data } = await axios.post(`${BASE_URI}/products/cart/${productId}`, {}, config)
+        const { data } = await axios.post(`${API_URL}/products/cart/${productId}`, {}, config)
         console.log(data)
         dispatch(fetchCartData());
     } catch (error) {
@@ -52,7 +52,7 @@ export const fetchCartData = (token) => async (dispatch) => {
                 "Authorization": `Bearer ${token}`
             }
         }
-        const res = await axios.get(`${BASE_URI}/products/cart`, config); // Fix here
+        const res = await axios.get(`${API_URL}/products/cart`, config); // Fix here
         console.log(res)
         dispatch(getCartDataSuccess(res.data));
     } catch (error) {
@@ -110,7 +110,7 @@ export const adjustQuantityInCart = (productId, token, adjustment) => async (dis
           "Authorization": `Bearer ${token}`
         }
       }
-      const { data } = await axios.get(`${BASE_URI}/products/cart`, config);
+      const { data } = await axios.get(`${API_URL}/products/cart`, config);
       const cart = data.map(item => {
         if (item.productId === productId) {
           if (adjustment < 0 && item.quantity === 1) {
@@ -121,7 +121,7 @@ export const adjustQuantityInCart = (productId, token, adjustment) => async (dis
         return item;
       });
       console.log(cart)
-    //   await axios.put(`${BASE_URI}/products/cart`, { cart }, config); // Update the cart on the server
+    //   await axios.put(`${API_URL}/products/cart`, { cart }, config); // Update the cart on the server
       dispatch(fetchCartData(token));
     } catch (error) {
       console.log(error);
@@ -137,7 +137,7 @@ export const removeFromCart = (productId, token, wishlist) => async (dispatch) =
                 "Authorization": `Bearer ${token}`
             }
         }
-        const res = await axios.delete(`${BASE_URI}/products/cart/${productId}`, config); // Fix here
+        const res = await axios.delete(`${API_URL}/products/cart/${productId}`, config); // Fix here
         console.log(res)
 
         dispatch(fetchCartData(token));
