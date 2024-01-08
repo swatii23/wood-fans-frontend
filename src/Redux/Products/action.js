@@ -22,46 +22,74 @@ export const fetchData = () => async (dispatch) => {
 
 
 // Do not use in cart page.
-export const addToCart = (productId, token) => async (dispatch) => {
-    try {
-        console.log(token, productId)
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }
-        const { data } = await axios.post(`${API_URL}/cart/${productId}`, {}, config)
-        console.log(data)
-        dispatch(fetchCartData());
-    } catch (error) {
-        console.log(error);
-    }
-};
+// export const addToCart = (productId, token) => async (dispatch) => {
+//     try {
+//         console.log(token, productId)
+//         const config = {
+//             headers: {
+//                 'Authorization': `Bearer ${token}`
+//             }
+//         }
+//         const { data } = await axios.post(`${API_URL}/cart/${productId}`, {}, config)
+//         console.log(data)
+//         dispatch(fetchCartData());
+//     } catch (error) {
+//         console.log(error);
+//     }
+// };
 
 
 export const getCartDataRequest = () => ({ type: CART_GET_REQUEST });
 export const getCartDataSuccess = (data) => ({ type: CART_GET_SUCCESS, payload: data });
 export const getCartDataFailure = (error) => ({ type: CART_GET_FAILURE, payload: error });
 
-export const fetchCartData = (token) => async (dispatch) => {
-    dispatch(getCartDataRequest());
+// export const fetchCartData = (token) => async (dispatch) => {
+//     dispatch(getCartDataRequest());
 
-    try {
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        }
-        const res = await axios.get(`${API_URL}/cart`, config); // Fix here
-        console.log(res)
-        dispatch(getCartDataSuccess(res.data));
-    } catch (error) {
-        console.log(error);
-        dispatch(getCartDataFailure(error));
-    }
+//     try {
+//         const config = {
+//             headers: {
+//                 "Authorization": `Bearer ${token}`
+//             }
+//         }
+//         const res = await axios.get(`${API_URL}/cart`, config); // Fix here
+//         console.log(res)
+//         dispatch(getCartDataSuccess(res.data));
+//     } catch (error) {
+//         console.log(error);
+//         dispatch(getCartDataFailure(error));
+//     }
+// };
+
+export const addToCart = (productId, token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    };
+    const { data } = await axios.post(`${API_URL}/cart/${productId}`, {}, config);
+    dispatch(fetchCartData(token));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-
+export const fetchCartData = (token) => async (dispatch) => {
+  dispatch(getCartDataRequest());
+  try {
+    const config = {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    };
+    const res = await axios.get(`${API_URL}/cart`, config);
+    dispatch(getCartDataSuccess(res.data));
+  } catch (error) {
+    console.log(error);
+    dispatch(getCartDataFailure(error));
+  }
+};
 
 
 // Do not use in cart page.
