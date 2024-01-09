@@ -194,6 +194,10 @@ export const getDataRequest = () => ({ type: DATA_GET_REQUEST });
 export const getDataSuccess = (data) => ({ type: DATA_GET_SUCCESS, payload: data });
 export const getDataFailure = (error) => ({ type: DATA_GET_FAILURE, payload: error });
 
+export const getCartDataRequest = () => ({ type: CART_GET_REQUEST });
+export const getCartDataSuccess = (data) => ({ type: CART_GET_SUCCESS, payload: data });
+export const getCartDataFailure = (error) => ({ type: CART_GET_FAILURE, payload: error });
+
 export const fetchData = () => async (dispatch) => {
   dispatch(getDataRequest());
   try {
