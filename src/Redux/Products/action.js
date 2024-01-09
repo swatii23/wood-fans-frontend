@@ -268,7 +268,7 @@ export const adjustQuantityInCart = (productId, token, adjustment) => async (dis
         "Authorization": `Bearer ${token}`
       }
     };
-    const { data } = await axios.post(`${API_URL}/cart/${productId}`, config);
+    const { data } = await axios.post(`${API_URL}/cart/${productId}`, {}, config);
     // const cart = data.map(item => {
     //   if (item.productId === productId) {
     //     if (adjustment < 0 && item.quantity === 1) {
