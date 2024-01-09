@@ -278,7 +278,7 @@ export const adjustQuantityInCart = (productId, token, adjustment) => async (dis
     //   }
     //   return item;
     // });
-    console.log(cart);
+    // console.log(cart);
     dispatch(fetchCartData(token));
   } catch (error) {
     console.log(error);
