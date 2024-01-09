@@ -185,8 +185,8 @@
 // productAction.js
 import axios from 'axios';
 import { doc, updateDoc, arrayUnion, arrayRemove, writeBatch } from '../../Services/firebaseConfig';
-import { getCartData, addToCart, removeItemFromCart } from './cartController';
-import { getWishlistData, addToWishlist, removeItemFromWishlist } from './wishlistController';
+// import { getCartData, addToCart, removeItemFromCart } from './cartController';
+// import { getWishlistData, addToWishlist, removeItemFromWishlist } from './wishlistController';
 import { DATA_GET_REQUEST, DATA_GET_SUCCESS, DATA_GET_FAILURE, CART_GET_REQUEST, CART_GET_SUCCESS, CART_GET_FAILURE, WISHLIST_GET_REQUEST, WISHLIST_GET_SUCCESS, WISHLIST_GET_FAILURE } from './actionTypes';
 import { API_URL } from '../api';
 
@@ -264,16 +264,16 @@ export const adjustQuantityInCart = (productId, token, adjustment) => async (dis
         "Authorization": `Bearer ${token}`
       }
     };
-    const { data } = await axios.get(`${API_URL}/cart`, config);
-    const cart = data.map(item => {
-      if (item.productId === productId) {
-        if (adjustment < 0 && item.quantity === 1) {
-          return item;
-        }
-        return { ...item, quantity: Math.max(0, item.quantity + adjustment) };
-      }
-      return item;
-    });
+    const { data } = await axios.post(`${API_URL}/cart/${productId}`, config);
+    // const cart = data.map(item => {
+    //   if (item.productId === productId) {
+    //     if (adjustment < 0 && item.quantity === 1) {
+    //       return item;
+    //     }
+    //     return { ...item, quantity: Math.max(0, item.quantity + adjustment) };
+    //   }
+    //   return item;
+    // });
     console.log(cart);
     dispatch(fetchCartData(token));
   } catch (error) {
@@ -288,7 +288,7 @@ export const removeFromCart = (productId, token, wishlist) => async (dispatch) =
         "Authorization": `Bearer ${token}`
       }
     };
-    await removeItemFromCart(productId, token);
+    await axios.delete(`${API_URL}/cart/${productId}`, config);
     dispatch(fetchCartData(token));
   } catch (error) {
     console.log(error);
